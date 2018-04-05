@@ -22,7 +22,9 @@ if __name__ == '__main__':
 
     # get frames per second
     fps = get_fps(video_path)
+
     # create input pattern
     input_pattern = '{}/%010d.png'.format(imgs_path)
+
     # convert seq of imgs into convert video
     imgs_to_video(input_pattern, fps, audio_path, output_video_path)

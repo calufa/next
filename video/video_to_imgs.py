@@ -6,7 +6,7 @@ from utils import video_to_imgs
 
 
 if __name__ == '__main__':
-    output_path = '/files/_video/imgs'
+    output_path = '/files/_video'
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--video-path')
@@ -23,11 +23,14 @@ if __name__ == '__main__':
 
     # get frames per second
     fps = get_fps(video_path)
+
     # create job output directory
     output_path = '{}/{}'.format(output_path, job_name)
     if not os.path.exists(output_path):
         os.makedirs(output_path)
+
     # create output pattern
     output_pattern = '{}/%010d.png'.format(output_path)
+
     # convert video into seq of imgs
     video_to_imgs(video_path, fps, output_pattern)

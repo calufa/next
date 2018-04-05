@@ -1,13 +1,12 @@
-service_name="next-video"
-service_dir="video"
+service="video"
 
 docker build \
-  -t ${service_name} \
-  -f ${service_dir}/Dockerfile \
-  ${service_dir}
+  -t ${service} \
+  -f ${service}/Dockerfile \
+  ${service}
 
 docker run \
-  -v $(pwd)/${service_dir}:/service \
+  -v $(pwd)/${service}:/service \
   -v $(pwd)/files:/files \
-  -it ${service_name} \
+  -it ${service} \
   bash
