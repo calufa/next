@@ -1,3 +1,4 @@
+# TODO: clean all depencies
 FROM nvidia/cuda:8.0-cudnn6-devel-ubuntu16.04
 
 WORKDIR /root
@@ -117,3 +118,7 @@ RUN pip install \
     six==1.10.0 \
     uritemplate==3.0.0 \
     tensorflow-gpu==1.4.1
+
+RUN mkdir /files
+RUN mkdir /service
+WORKDIR /service
