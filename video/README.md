@@ -11,6 +11,6 @@ python extract_audio.py \
 
 python imgs_to_video.py \
   --video-path /files/...mp4 \
-  --imgs-path /files/... \
+  --imgs-path /files/...png \
   --audio-path /files/...aac \
   --output-video-path /files/...mp4
