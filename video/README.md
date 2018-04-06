@@ -2,8 +2,8 @@ $ cd next
 $ ./video/run.sh
 
 python video_to_imgs.py \
-  --video-path /files/...mp4 \
-  --job-name ...
+  --job-name ... \
+  --video-path /files/...mp4
 
 python extract_audio.py \
   --video-path /files/...mp4 \
