@@ -1,5 +1,5 @@
 $ cd next
-$ ./video/run.sh
+$ ./face2landmarks/run.sh
 
 python run.py \
   --imgs-path /files/... \
