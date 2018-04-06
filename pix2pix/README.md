@@ -8,4 +8,4 @@ python run.py \
 python run.py \
   --job-name test1 \
   --imgs-path /files/_combine-imgs/test1 \
-  --max-epochs=100
+  --max-epochs=200
