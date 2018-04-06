@@ -9,16 +9,16 @@ if __name__ == '__main__':
     output_path = '/files/_video'
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--video-path')
     parser.add_argument('--job-name')
+    parser.add_argument('--video-path')
     parser.add_argument('--output-path', default=output_path)
     args = parser.parse_args()
 
     for k, v in args._get_kwargs():
         print '{}={}'.format(k, v)
 
-    video_path = args.video_path
     job_name = args.job_name
+    video_path = args.video_path
     output_path = args.output_path
 
     # get frames per second

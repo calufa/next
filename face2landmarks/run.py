@@ -52,16 +52,16 @@ if __name__ == '__main__':
     output_path = '/files/_face2landmarks'
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--imgs-path')
     parser.add_argument('--job-name')
+    parser.add_argument('--imgs-path')
     parser.add_argument('--output-path', default=output_path)
     args = parser.parse_args()
 
     for k, v in args._get_kwargs():
         print '{}={}'.format(k, v)
 
-    imgs_path = args.imgs_path
     job_name = args.job_name
+    imgs_path = args.imgs_path
     output_path = args.output_path
 
     # load vision models
