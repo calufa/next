@@ -281,7 +281,8 @@ def train():
     random.seed(seed)
 
     # load samples
-    input_paths = glob.glob(imgs_path)
+    pattern_path = '{}/*'.format(imgs_path)
+    input_paths = glob.glob(pattern_path)
     samples = load_samples(input_paths)
     print('samples count:', len(input_paths))
 
@@ -314,11 +315,10 @@ def train():
     sv = tf.train.Supervisor(logdir=output_path, save_summaries_secs=0, saver=None)
 
     with sv.managed_session() as sess:
-        print('parameter_count:', sess.run(parameter_count))
+        parameter_count = sess.run(parameter_count)
+        print('parameter_count:', parameter_count)
 
-        max_steps = 2**32
-        if max_epochs is not None:
-            max_steps = samples.steps_per_epoch * max_epochs
+        max_steps = samples.steps_per_epoch * max_epochs
         print('max_steps:', max_steps)
 
         start = time.time()
@@ -339,7 +339,7 @@ def train():
             rate = (step + 1) * batch_size / (time.time() - start)
             remaining = (max_steps - step) * batch_size / rate
 
-            print('progress epoch %d step %d image/sec %0.1f remaining %dm' % (train_epoch, train_step, rate, remaining / 60))
+            print('epoch %d step %d / %d image/sec %0.1f remaining %dm' % (train_epoch, train_step, samples.steps_per_epoch, rate, remaining / 60))
             print('discrim_loss:', results['discrim_loss'])
             print('gen_loss_GAN:', results['gen_loss_GAN'])
             print('gen_loss_L1:', results['gen_loss_L1'])
@@ -352,14 +352,16 @@ def train():
 
 
 if __name__ == '__main__':
+    output_path = '/files/_pix2pix'
     EPS = 1e-12
     image_size = 256
     Samples = collections.namedtuple('Samples', 'paths, inputs, targets, steps_per_epoch')
     Model = collections.namedtuple('Model', 'outputs, predict_real, predict_fake, discrim_loss, discrim_grads_and_vars, gen_loss_GAN, gen_loss_L1, gen_grads_and_vars, train')
 
     parser = argparse.ArgumentParser()
+    parser.add_argument('--job-name')
     parser.add_argument('--imgs-path')
-    parser.add_argument('--output-path')
+    parser.add_argument('--output-path', default=output_path)
     parser.add_argument('--max-epochs', type=int)
     parser.add_argument('--batch-size', type=int, default=1)
     parser.add_argument('--ngf', type=int, default=64, help='number of generator filters in first conv layer')
@@ -371,8 +373,9 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     for k, v in args._get_kwargs():
-        print '{}={}'.format(k, v)
+        print('{}={}'.format(k, v))
 
+    job_name = args.job_name
     imgs_path = args.imgs_path
     output_path = args.output_path
     max_epochs = args.max_epochs
@@ -383,5 +386,10 @@ if __name__ == '__main__':
     beta1 = args.beta1
     l1_weight = args.l1_weight
     gan_weight = args.gan_weight
+
+    # create job output directory
+    output_path = '{}/{}'.format(output_path, job_name)
+    if not os.path.exists(output_path):
+        os.makedirs(output_path)
 
     train()
