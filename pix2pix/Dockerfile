@@ -28,7 +28,8 @@ RUN apt-get install -y --no-install-recommends \
         python-numpy \
         python-pip \
         python-setuptools \
-        python-scipy
+        python-scipy \
+        screen
 
 ENV CAFFE_ROOT=/opt/caffe
 
