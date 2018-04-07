@@ -28,8 +28,7 @@ RUN apt-get install -y --no-install-recommends \
         python-numpy \
         python-pip \
         python-setuptools \
-        python-scipy \
-        screen
+        python-scipy
 
 ENV CAFFE_ROOT=/opt/caffe
 
@@ -119,6 +118,8 @@ RUN pip install \
     six==1.10.0 \
     uritemplate==3.0.0 \
     tensorflow-gpu==1.4.1
+
+RUN apt-get install -y screen
 
 RUN mkdir /files
 RUN mkdir /service
