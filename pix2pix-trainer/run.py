@@ -65,7 +65,8 @@ def create_model(inputs, targets):
         out_channels = int(inputs.get_shape()[-1])
         outputs = create_generator(inputs, out_channels)
 
-    # create two copies of discriminator, one for real pairs and one for fake pairs
+    # create two copies of discriminator
+    # one for real pairs and one for fake pairs
     # they share the same underlying variables
     with tf.name_scope('real_discriminator'):
         with tf.variable_scope('discriminator'):
