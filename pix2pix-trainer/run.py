@@ -352,7 +352,7 @@ def train():
 
 
 if __name__ == '__main__':
-    output_path = '/files/_pix2pix'
+    output_path = '/files/_pix2pix-trainer'
     EPS = 1e-12
     image_size = 256
     Samples = collections.namedtuple('Samples', 'paths, inputs, targets, steps_per_epoch')

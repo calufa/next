@@ -1,4 +1,4 @@
-service="pix2pix"
+service="pix2pix-trainer"
 
 nvidia-docker build \
   -t ${service} \
