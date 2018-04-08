@@ -32,3 +32,10 @@ gcloud compute scp gpu:/home/next/${DIR} ./ \
   --project magggenta-176803 \
   --zone us-central1-c
 
+# sync input video
+input_video=test1.mp4
+gcloud compute scp ./files/${input_video} gpu:/home/next/files/${input_video} \
+  --compress \
+  --recurse \
+  --project magggenta-176803 \
+  --zone us-central1-c

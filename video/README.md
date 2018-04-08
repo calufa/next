@@ -14,3 +14,10 @@ python imgs_to_video.py \
   --imgs-path /files/...png \
   --audio-path /files/...aac \
   --output-video-path /files/...mp4
+
+# examples
+job_name=test2
+video_path=/files/${job_name}.mp4
+python video_to_imgs.py \
+  --job-name ${job_name} \
+  --video-path ${video_path}
