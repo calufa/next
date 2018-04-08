@@ -737,8 +737,9 @@ def main():
                 for i, f in enumerate(filesets):
                     print("evaluated image", f["name"])
                 index_path = append_index(filesets)
-            print("wrote index at", index_path)
+            print("wrote index at:", index_path)
+            print('max_epochs:', a.max_epochs)
             print("max_steps:", max_steps)
-            print("rate", (time.time() - start) / max_steps)
+            print("rate:", (time.time() - start) / max_steps)
 
 main()
