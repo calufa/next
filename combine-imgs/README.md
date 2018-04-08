@@ -6,7 +6,9 @@ python run.py \
   --A-path ... \
   --B-path ...
 
+# example
+$job_name=...
 python run.py \
-  --job-name test1 \
-  --A-path /files/_crop-imgs/test1-A \
-  --B-path /files/_crop-imgs/test1-B
+  --job-name ${job_name} \
+  --A-path /files/_crop-imgs/${job_name}-A \
+  --B-path /files/_crop-imgs/${job_name}-B

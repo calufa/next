@@ -5,10 +5,12 @@ python run.py \
   --job-name ... \
   --imgs-path ...
 
+# examples
+job_name=...
 python run.py \
-  --job-name test1-A \
-  --imgs-path /files/_face2landmarks/test1
+  --job-name ${job_name}-A \
+  --imgs-path /files/_face2landmarks/${job_name}
 
 python run.py \
-  --job-name test1-B \
-  --imgs-path /files/_video/test1
+  --job-name ${job_name}-B \
+  --imgs-path /files/_video/${job_name}
