@@ -20,25 +20,41 @@ def get_landmarks(img):
         landmarks = predictor(gray, face).parts()
         landmarks = [[p.x, p.y] for p in landmarks]
 
-        jaw = reshape_for_polyline(landmarks[0:17])
-        left_eyebrow = reshape_for_polyline(landmarks[22:27])
-        right_eyebrow = reshape_for_polyline(landmarks[17:22])
-        nose_bridge = reshape_for_polyline(landmarks[27:31])
-        lower_nose = reshape_for_polyline(landmarks[30:35])
-        left_eye = reshape_for_polyline(landmarks[42:48])
-        right_eye = reshape_for_polyline(landmarks[36:42])
-        outer_lip = reshape_for_polyline(landmarks[48:60])
-        inner_lip = reshape_for_polyline(landmarks[60:68])
+        if 'jaw' in landmarks:
+            jaw = reshape_for_polyline(landmarks[0:17])
+            cv2.polylines(img, [jaw], False, color, thickness)
 
-        cv2.polylines(img, [jaw], False, color, thickness)
-        cv2.polylines(img, [left_eyebrow], False, color, thickness)
-        cv2.polylines(img, [right_eyebrow], False, color, thickness)
-        cv2.polylines(img, [nose_bridge], False, color, thickness)
-        cv2.polylines(img, [lower_nose], True, color, thickness)
-        cv2.polylines(img, [left_eye], True, color, thickness)
-        cv2.polylines(img, [right_eye], True, color, thickness)
-        cv2.polylines(img, [outer_lip], True, color, thickness)
-        cv2.polylines(img, [inner_lip], True, color, thickness)
+        if 'left_eyebrow' in landmarks:
+            left_eyebrow = reshape_for_polyline(landmarks[22:27])
+            cv2.polylines(img, [left_eyebrow], False, color, thickness)
+
+        if 'right_eyebrow' in landmarks:
+            right_eyebrow = reshape_for_polyline(landmarks[17:22])
+            cv2.polylines(img, [right_eyebrow], False, color, thickness)
+
+        if 'nose_bridge' in landmarks:
+            nose_bridge = reshape_for_polyline(landmarks[27:31])
+            cv2.polylines(img, [nose_bridge], False, color, thickness)
+
+        if 'lower_nose' in landmarks:
+            lower_nose = reshape_for_polyline(landmarks[30:35])
+            cv2.polylines(img, [lower_nose], True, color, thickness)
+
+        if 'left_eye' in landmarks:
+            left_eye = reshape_for_polyline(landmarks[42:48])
+            cv2.polylines(img, [left_eye], True, color, thickness)
+
+        if 'right_eye' in landmarks:
+            right_eye = reshape_for_polyline(landmarks[36:42])
+            cv2.polylines(img, [right_eye], True, color, thickness)
+
+        if 'outer_lip' in landmarks:
+            outer_lip = reshape_for_polyline(landmarks[48:60])
+            cv2.polylines(img, [outer_lip], True, color, thickness)
+
+        if 'inner_lip' in landmarks:
+            inner_lip = reshape_for_polyline(landmarks[60:68])
+            cv2.polylines(img, [inner_lip], True, color, thickness)
 
     return img
 
@@ -50,11 +66,17 @@ def reshape_for_polyline(array):
 
 if __name__ == '__main__':
     output_path = '/files/_face2landmarks'
+    landmarks = ['jaw',
+                 'left_eyebrow', 'right_eyebrow',
+                 'nose_bridge', 'lower_nose',
+                 'left_eye', 'right_eye',
+                 'outer_lip', 'inner_lip']
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--job-name')
     parser.add_argument('--imgs-path')
     parser.add_argument('--output-path', default=output_path)
+    parser.add_argument('--landmarks', default=landmarks)
     args = parser.parse_args()
 
     for k, v in args._get_kwargs():
@@ -63,6 +85,7 @@ if __name__ == '__main__':
     job_name = args.job_name
     imgs_path = args.imgs_path
     output_path = args.output_path
+    landmarks = args.landmarks
 
     # load vision models
     detector = dlib.get_frontal_face_detector()
