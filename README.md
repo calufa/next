@@ -1,5 +1,5 @@
-$ gcloud auth login
-$ gcloud compute --project "magggenta-176803" ssh --zone "us-central1-c" "gpu"
+gcloud auth login
+gcloud compute --project "magggenta-176803" ssh --zone "us-central1-c" "gpu"
 
 # sync all
 gcloud compute scp ./ gpu:/home/next \
