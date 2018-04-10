@@ -20,39 +20,39 @@ def get_landmarks(img):
         landmarks = predictor(gray, face).parts()
         landmarks = [[p.x, p.y] for p in landmarks]
 
-        if 'jaw' in landmarks:
+        if 'jaw' in args.landmarks:
             jaw = reshape_for_polyline(landmarks[0:17])
             cv2.polylines(img, [jaw], False, color, thickness)
 
-        if 'left_eyebrow' in landmarks:
+        if 'left_eyebrow' in args.landmarks:
             left_eyebrow = reshape_for_polyline(landmarks[22:27])
             cv2.polylines(img, [left_eyebrow], False, color, thickness)
 
-        if 'right_eyebrow' in landmarks:
+        if 'right_eyebrow' in args.landmarks:
             right_eyebrow = reshape_for_polyline(landmarks[17:22])
             cv2.polylines(img, [right_eyebrow], False, color, thickness)
 
-        if 'nose_bridge' in landmarks:
+        if 'nose_bridge' in args.landmarks:
             nose_bridge = reshape_for_polyline(landmarks[27:31])
             cv2.polylines(img, [nose_bridge], False, color, thickness)
 
-        if 'lower_nose' in landmarks:
+        if 'lower_nose' in args.landmarks:
             lower_nose = reshape_for_polyline(landmarks[30:35])
             cv2.polylines(img, [lower_nose], True, color, thickness)
 
-        if 'left_eye' in landmarks:
+        if 'left_eye' in args.landmarks:
             left_eye = reshape_for_polyline(landmarks[42:48])
             cv2.polylines(img, [left_eye], True, color, thickness)
 
-        if 'right_eye' in landmarks:
+        if 'right_eye' in args.landmarks:
             right_eye = reshape_for_polyline(landmarks[36:42])
             cv2.polylines(img, [right_eye], True, color, thickness)
 
-        if 'outer_lip' in landmarks:
+        if 'outer_lip' in args.landmarks:
             outer_lip = reshape_for_polyline(landmarks[48:60])
             cv2.polylines(img, [outer_lip], True, color, thickness)
 
-        if 'inner_lip' in landmarks:
+        if 'inner_lip' in args.landmarks:
             inner_lip = reshape_for_polyline(landmarks[60:68])
             cv2.polylines(img, [inner_lip], True, color, thickness)
 
@@ -82,22 +82,19 @@ if __name__ == '__main__':
     for k, v in args._get_kwargs():
         print '{}={}'.format(k, v)
 
-    job_name = args.job_name
-    imgs_path = args.imgs_path
     output_path = args.output_path
-    landmarks = args.landmarks
 
     # load vision models
     detector = dlib.get_frontal_face_detector()
     predictor = dlib.shape_predictor('shape_predictor_68_face_landmarks.dat')
 
     # create job output directory
-    output_path = '{}/{}'.format(output_path, job_name)
+    output_path = '{}/{}'.format(output_path, args.job_name)
     if not os.path.exists(output_path):
         os.makedirs(output_path)
 
     # get and sort files
-    pattern_path = '{}/*'.format(imgs_path)
+    pattern_path = '{}/*'.format(args.imgs_path)
     files = glob2.glob(pattern_path)
     files = sorted(files)
 
