@@ -76,7 +76,7 @@ if __name__ == '__main__':
     parser.add_argument('--job-name')
     parser.add_argument('--imgs-path')
     parser.add_argument('--output-path', default=output_path)
-    parser.add_argument('--landmarks', default=landmarks)
+    parser.add_argument('--landmarks', default=landmarks, nargs='+')
     args = parser.parse_args()
 
     for k, v in args._get_kwargs():
