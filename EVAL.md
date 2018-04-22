@@ -22,7 +22,7 @@
     job_name=test6
     top=0.27 # percentage
     left=0.5 # percentage
-    crop_width=620
+    crop_width=650
     crop_height=650
     resize_width=256
     resize_height=256
@@ -68,7 +68,7 @@
 
     model_name=test5
     job_name=test6
-    output_name=test6
+    output_name=test6B
     checkpoint=/files/_pix2pix-trainer/${model_name}
     input_dir=/files/_combine-imgs/${job_name}
     output_dir=/files/_pix2pix-infer/${output_name}
@@ -80,8 +80,8 @@
       --output_dir ${output_dir}
 
 
-    job_name=test6
-    gcloud compute scp gpu:/home/next/files/_pix2pix-infer/${job_name} ./files/_pix2pix-infer/ \
+    output_name=test6B
+    gcloud compute scp gpu:/home/next/files/_pix2pix-infer/${output_name} ./files/_pix2pix-infer/ \
       --compress \
       --recurse \
       --project magggenta-176803 \
@@ -96,9 +96,9 @@
       --audio-path /files/${job_name}.aac
 
     video_name=test6
-    job_name=test6
+    job_name=test6B
     audio_name=test6
-    output_video_name=test6
+    output_video_name=test6B
     video_path=/files/${video_name}.mp4
     python imgs_to_video.py \
       --video-path ${video_path} \
