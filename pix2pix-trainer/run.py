@@ -270,10 +270,6 @@ def batchnorm(inputs):
     return tf.layers.batch_normalization(inputs, axis=3, epsilon=1e-5, momentum=0.1, training=True, gamma_initializer=tf.random_normal_initializer(1.0, 0.02))
 
 
-def convert_image_dtype(image):
-    return tf.image.convert_image_dtype(image, dtype=tf.uint8, saturate=True)
-
-
 def train():
     # set seed
     seed = random.randint(0, 2**31 - 1)
