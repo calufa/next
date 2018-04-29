@@ -10,13 +10,11 @@ from os.path import basename
 
 def get_landmarks(img):
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    faces = detector(gray, 1)
-
     img = np.zeros(img.shape, np.uint8)
     color = (255, 255, 255)
     thickness = 3
 
-    for face in faces:
+    for face in detector(gray, 1):
         landmarks = predictor(gray, face).parts()
         landmarks = [[p.x, p.y] for p in landmarks]
 
@@ -57,7 +55,6 @@ def get_landmarks(img):
             cv2.polylines(img, [inner_lip], True, color, thickness)
 
     return img
-
 
 def reshape_for_polyline(array):
     # reshape image so that it works with polyline
