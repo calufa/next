@@ -16,10 +16,10 @@ output_video_name=${job_name}
 # landmarks
 landmarks='left_eye right_eye outer_lip inner_lip'
 
-# build docker imgs
+echo '> build docker imgs'
 ./build.sh
 
-# video to imgs
+echo '> video to imgs'
 video_path=/files/${job_name}.mp4
 docker run \
   -v $(pwd)/video:/service \
@@ -29,7 +29,7 @@ docker run \
     --job-name ${job_name} \
     --video-path ${video_path}
 
-# extract facial landmarks
+echo '> extract facial landmarks'
 docker run \
   -v $(pwd)/face2landmarks:/service \
   -v $(pwd)/files:/files \
@@ -39,7 +39,7 @@ docker run \
     --imgs-path /files/_video/${job_name} \
     --landmarks ${landmarks}
 
-# crop imgs
+echo '> crop imgs'
 docker run \
   -v $(pwd)/crop-imgs:/service \
   -v $(pwd)/files:/files \
@@ -67,7 +67,7 @@ docker run \
     --resize-width ${resize_width} \
     --resize-height ${resize_height}
 
-# combine imgs
+echo '> combine imgs'
 docker run \
   -v $(pwd)/combine-imgs:/service \
   -v $(pwd)/files:/files \
@@ -77,10 +77,10 @@ docker run \
     --A-path /files/_crop-imgs/${job_name}-A \
     --B-path /files/_crop-imgs/${job_name}-B
 
-# infer
+echo '> infer'
 checkpoint=/files/_pix2pix-trainer/${model_name}
 input_dir=/files/_combine-imgs/${job_name}
-output_dir=${pwd}/files/_pix2pix-infer/${model_output_name}
+output_dir=${PWD}/files/_pix2pix-infer/${model_output_name}
 mkdir -p ${output_dir}
 nvidia-docker run \
   -v $(pwd)/pix2pix-infer:/service \
@@ -92,8 +92,8 @@ nvidia-docker run \
     --input_dir  ${input_dir} \
     --output_dir ${output_dir}
 
-# extract audio
-rm -f ${pwd}/files/${job_name}.aac
+echo '> extract audio'
+rm -f ${PWD}/files/${job_name}.aac
 docker run \
   -v $(pwd)/video:/service \
   -v $(pwd)/files:/files \
@@ -102,9 +102,9 @@ docker run \
     --video-path /files/${job_name}.mp4 \
     --audio-path /files/${job_name}.aac
 
-# create video from infered imgs
+echo '> create video from infered imgs'
 video_path=/files/${video_name}.mp4
-rm -f ${pwd}/files/${video_name}.mp4
+rm -f ${PWD}/files/${output_video_name}-gen.mp4
 docker run \
   -v $(pwd)/video:/service \
   -v $(pwd)/files:/files \
