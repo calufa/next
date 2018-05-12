@@ -341,8 +341,19 @@ def train():
             if sv.should_stop():
                 break
 
-        print('saving model')
-        saver.save(sess, os.path.join(output_path, 'model'), global_step=sv.global_step)
+            # save model
+            if train_epoch % 10 == 0 and train_step == 1:
+                print('saving model')
+                output_path = '{}/{}/{}'.format(output_path, job_name, train_epoch)
+                if not os.path.exists(output_path):
+                    os.makedirs(output_path)
+                    saver.save(sess, os.path.join(output_path, 'model'), global_step=sv.global_step)
+
+        # save model
+        output_path = '{}/{}/{}'.format(output_path, job_name, 'final')
+        if not os.path.exists(output_path):
+            os.makedirs(output_path)
+            saver.save(sess, os.path.join(output_path, 'model'), global_step=sv.global_step)
 
 
 if __name__ == '__main__':
@@ -380,10 +391,5 @@ if __name__ == '__main__':
     beta1 = args.beta1
     l1_weight = args.l1_weight
     gan_weight = args.gan_weight
-
-    # create job output directory
-    output_path = '{}/{}'.format(output_path, job_name)
-    if not os.path.exists(output_path):
-        os.makedirs(output_path)
 
     train()
