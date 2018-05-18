@@ -1,6 +1,6 @@
-job_name=test9
+job_name=test10
 model_name=test7
-model_version=10.0
+model_version=30.0
 # crop settings
 top=0.35 # percentage
 left=0.5 # percentage
@@ -77,7 +77,7 @@ checkpoint=/files/_pix2pix-trainer/${model_name}/${model_version}
 input_dir=/files/_combine-imgs/${job_name}
 output_dir=/files/_pix2pix-infer/${job_name}/${model_name}-${model_version}
 mkdir -p ${PWD}/${output_dir}
-nvidia-docker run \
+docker run \
   -v $(pwd)/pix2pix-infer:/service \
   -v $(pwd)/files:/files \
   -it pix2pix-infer \

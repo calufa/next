@@ -1,4 +1,4 @@
-FROM tensorflow/tensorflow:1.4.1-gpu
+FROM tensorflow/tensorflow:1.4.1
 
 RUN pip install glob2==0.6
 
