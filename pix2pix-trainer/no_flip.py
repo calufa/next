@@ -305,6 +305,10 @@ def train():
     with tf.name_scope('parameter_count'):
         parameter_count = tf.reduce_sum([tf.reduce_prod(tf.shape(v)) for v in tf.trainable_variables()])
 
+    output_path = '{}/{}'.format(base_output_path, job_name)
+    if not os.path.exists(output_path):
+        os.makedirs(output_path)
+
     saver = tf.train.Saver(max_to_keep=1)
     sv = tf.train.Supervisor(logdir=output_path, save_summaries_secs=0, saver=None)
 
@@ -342,22 +346,22 @@ def train():
                 break
 
             # save model
-            if train_epoch % 10 == 0 and train_step == 1:
+            if train_step == 1:
                 print('saving model')
-                output_path = '{}/{}/{}'.format(output_path, job_name, train_epoch)
+                output_path = '{}/{}/{}'.format(base_output_path, job_name, train_epoch)
                 if not os.path.exists(output_path):
                     os.makedirs(output_path)
                     saver.save(sess, os.path.join(output_path, 'model'), global_step=sv.global_step)
 
         # save model
-        output_path = '{}/{}/{}'.format(output_path, job_name, 'final')
+        output_path = '{}/{}/{}'.format(base_output_path, job_name, 'final')
         if not os.path.exists(output_path):
             os.makedirs(output_path)
             saver.save(sess, os.path.join(output_path, 'model'), global_step=sv.global_step)
 
 
 if __name__ == '__main__':
-    output_path = '/files/_pix2pix-trainer'
+    base_output_path = '/files/_pix2pix-trainer'
     EPS = 1e-12
     image_size = 256
     Samples = collections.namedtuple('Samples', 'paths, inputs, targets, steps_per_epoch')
@@ -366,7 +370,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--job-name')
     parser.add_argument('--imgs-path')
-    parser.add_argument('--output-path', default=output_path)
+    parser.add_argument('--output-path', default=base_output_path)
     parser.add_argument('--max-epochs', type=int)
     parser.add_argument('--batch-size', type=int, default=1)
     parser.add_argument('--ngf', type=int, default=64, help='number of generator filters in first conv layer')
@@ -382,7 +386,7 @@ if __name__ == '__main__':
 
     job_name = args.job_name
     imgs_path = args.imgs_path
-    output_path = args.output_path
+    base_output_path = args.output_path
     max_epochs = args.max_epochs
     batch_size = args.batch_size
     ngf = args.ngf
