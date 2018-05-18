@@ -60,3 +60,10 @@ gcloud compute scp ./$file gpu:/home/next \
   --recurse \
   --project magggenta-176803 \
   --zone us-central1-c
+
+file="train.sh"
+gcloud compute scp ./$file gpu:/home/next \
+  --compress \
+  --recurse \
+  --project magggenta-176803 \
+  --zone us-central1-c
