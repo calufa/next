@@ -1,4 +1,5 @@
 job_name=test7
+video_path=/files/${job_name}.mp4
 # crop settings
 top=0.35 # percentage
 left=0.5 # percentage
@@ -8,12 +9,13 @@ resize_width=256
 resize_height=256
 # landmarks
 landmarks='left_eye right_eye outer_lip inner_lip'
+# training
+epochs=40
 
 echo '> build docker imgs'
 ./build.sh
 
 echo '> video to imgs'
-video_path=/files/${job_name}.mp4
 docker run \
   -v $(pwd)/video:/service \
   -v $(pwd)/files:/files \
