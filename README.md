@@ -12,3 +12,6 @@ https://aescripts.com/auto-lip-sync/
 try head pose
 human pose
 split training data so we have data to train the gan that fixes shadows
+
+type
+https://www.daltonmaag.com/library
